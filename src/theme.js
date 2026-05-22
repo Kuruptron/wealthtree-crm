@@ -17,7 +17,7 @@ export const lightTheme = {
 };
 
 export const darkTheme = {
-  burgundy: '#C0395A',
+  burgundy: '#E57214',
   orange: '#F0853A',
   nero: '#EBEBEB',
   slate: '#C8C8C8',
