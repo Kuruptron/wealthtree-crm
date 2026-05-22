@@ -58,7 +58,13 @@ function AppLayout() {
 }
 
 function AppContent() {
-  const { user } = useAuth();
+  const { user, ready } = useAuth();
+  const theme = useTheme();
+  if (!ready) return (
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', background: theme.pageBg, fontFamily: '"IBM Plex Sans", sans-serif' }}>
+      <div style={{ color: theme.steel, fontSize: '13px' }}>Loading…</div>
+    </div>
+  );
   if (!user) return <Login />;
   return <AppLayout />;
 }
