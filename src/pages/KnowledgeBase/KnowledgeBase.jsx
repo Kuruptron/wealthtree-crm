@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useTheme } from '../../context/ThemeContext';
+import { useAuth } from '../../context/AuthContext';
 import { Icon } from '../../components/shared/Icons';
 import PageHeader from '../../components/shared/PageHeader';
 import Modal from '../../components/shared/Modal';
@@ -7,6 +8,7 @@ import { knowledgeEntries as initialEntries } from '../../data/mockData';
 
 export default function KnowledgeBase() {
   const theme = useTheme();
+  const { isAdmin } = useAuth();
   const [entries, setEntries] = useState(initialEntries);
   const [search, setSearch] = useState('');
   const [filterType, setFilterType] = useState('All');
@@ -34,7 +36,7 @@ export default function KnowledgeBase() {
 
   return (
     <div>
-      <PageHeader title="Knowledge Base" subtitle="Books, research, articles, and team learnings" action={{ label: 'Add Entry', onClick: () => setShowAdd(true) }} />
+      <PageHeader title="Knowledge Base" subtitle="Books, research, articles, and team learnings" action={isAdmin ? { label: 'Add Entry', onClick: () => setShowAdd(true) } : null} />
 
       <div style={{ display: 'flex', gap: '12px', marginBottom: '20px', flexWrap: 'wrap' }}>
         <div style={{ position: 'relative', flex: '1', minWidth: '200px' }}>

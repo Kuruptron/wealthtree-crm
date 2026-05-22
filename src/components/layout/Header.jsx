@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme, useToggleTheme, useIsDark } from '../../context/ThemeContext';
+import { useAuth } from '../../context/AuthContext';
 import { Icon } from '../shared/Icons';
 import { clients, interactions, knowledgeEntries } from '../../data/mockData';
 
@@ -8,9 +9,11 @@ export default function Header() {
   const theme = useTheme();
   const toggleTheme = useToggleTheme();
   const isDark = useIsDark();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const [showResults, setShowResults] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
   const results = search.length > 1 ? [
     ...clients.filter(c => c.name.toLowerCase().includes(search.toLowerCase()) || c.pan.toLowerCase().includes(search.toLowerCase())).slice(0, 3).map(c => ({ type: 'Client', label: c.name, sub: c.pan, path: `/clients/${c.id}` })),
@@ -52,7 +55,6 @@ export default function Header() {
       </div>
 
       <div style={{ display: 'flex', gap: '8px', marginLeft: 'auto', alignItems: 'center' }}>
-        {/* Dark mode toggle */}
         <button
           onClick={toggleTheme}
           title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
@@ -68,7 +70,44 @@ export default function Header() {
           <div style={{ position: 'absolute', top: '7px', right: '7px', width: '5px', height: '5px', borderRadius: '50%', background: theme.error }} />
         </button>
 
-        <div style={{ width: '32px', height: '32px', background: theme.burgundy, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>S</div>
+        {/* User avatar + menu */}
+        <div style={{ position: 'relative' }}>
+          <div
+            onClick={() => setShowUserMenu(m => !m)}
+            onBlur={() => setTimeout(() => setShowUserMenu(false), 200)}
+            tabIndex={0}
+            title={user?.name}
+            style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', padding: '4px 8px 4px 4px', borderRadius: '20px', background: showUserMenu ? theme.smoke : 'transparent', border: `1px solid ${showUserMenu ? theme.fog : 'transparent'}`, transition: 'all 0.15s' }}
+            onMouseEnter={e => { e.currentTarget.style.background = theme.smoke; e.currentTarget.style.borderColor = theme.fog; }}
+            onMouseLeave={e => { if (!showUserMenu) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'transparent'; } }}
+          >
+            <div style={{ width: '30px', height: '30px', background: theme.burgundy, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '12px', fontWeight: '600', flexShrink: 0 }}>
+              {user?.initials || '?'}
+            </div>
+            <span style={{ fontSize: '13px', fontWeight: '500', color: theme.nero, whiteSpace: 'nowrap' }}>{user?.name}</span>
+            {user?.role === 'admin' && (
+              <span style={{ fontSize: '9px', fontWeight: '700', background: `${theme.burgundy}20`, color: theme.burgundy, padding: '2px 6px', borderRadius: '10px', textTransform: 'uppercase', letterSpacing: '0.4px' }}>Admin</span>
+            )}
+          </div>
+
+          {showUserMenu && (
+            <div style={{ position: 'absolute', top: 'calc(100% + 6px)', right: 0, background: theme.white, border: `1px solid ${theme.fog}`, borderRadius: '8px', boxShadow: '0 8px 24px rgba(0,0,0,0.15)', overflow: 'hidden', minWidth: '180px', zIndex: 300 }}>
+              <div style={{ padding: '14px 16px', borderBottom: `1px solid ${theme.fog}` }}>
+                <div style={{ fontSize: '13px', fontWeight: '600', color: theme.nero }}>{user?.name}</div>
+                <div style={{ fontSize: '12px', color: theme.steel, marginTop: '2px', textTransform: 'capitalize' }}>{user?.role}</div>
+              </div>
+              <button
+                onClick={logout}
+                style={{ width: '100%', padding: '12px 16px', background: 'none', border: 'none', display: 'flex', alignItems: 'center', gap: '10px', fontSize: '13px', color: theme.error, cursor: 'pointer', fontFamily: 'inherit', textAlign: 'left' }}
+                onMouseEnter={e => e.currentTarget.style.background = `${theme.error}10`}
+                onMouseLeave={e => e.currentTarget.style.background = 'none'}
+              >
+                <Icon.LogOut />
+                Sign out
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { formatCurrency } from '../../theme';
 import { useTheme } from '../../context/ThemeContext';
+import { useAuth } from '../../context/AuthContext';
 import { Icon } from '../../components/shared/Icons';
 import DataTable from '../../components/shared/DataTable';
 import PageHeader from '../../components/shared/PageHeader';
@@ -10,6 +11,7 @@ import { clients as initialClients } from '../../data/mockData';
 
 export default function ClientList() {
   const theme = useTheme();
+  const { isAdmin } = useAuth();
   const navigate = useNavigate();
   const [clients, setClients] = useState(initialClients);
   const [search, setSearch] = useState('');
@@ -58,7 +60,7 @@ export default function ClientList() {
 
   return (
     <div>
-      <PageHeader title="Clients" subtitle={`${clients.length} clients · ${formatCurrency(clients.reduce((s, c) => s + c.aum, 0))} total AUM`} action={{ label: 'Add Client', onClick: () => setShowAdd(true) }} />
+      <PageHeader title="Clients" subtitle={`${clients.length} clients · ${formatCurrency(clients.reduce((s, c) => s + c.aum, 0))} total AUM`} action={isAdmin ? { label: 'Add Client', onClick: () => setShowAdd(true) } : null} />
 
       <div style={{ display: 'flex', gap: '12px', marginBottom: '20px', flexWrap: 'wrap' }}>
         <div style={{ position: 'relative', flex: '1', minWidth: '200px' }}>

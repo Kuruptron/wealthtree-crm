@@ -31,4 +31,5 @@ export const Icon = {
   Link: () => <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M8 12a4 4 0 005.66 0l2-2a4 4 0 00-5.66-5.66L9 5.34" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><path d="M12 8a4 4 0 00-5.66 0l-2 2a4 4 0 005.66 5.66L11 14.66" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>,
   Sun: () => <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="4" stroke="currentColor" strokeWidth="1.5"/><path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.93 4.93l1.41 1.41M13.66 13.66l1.41 1.41M4.93 15.07l1.41-1.41M13.66 6.34l1.41-1.41" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>,
   Moon: () => <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M17 13A7 7 0 017 3a7 7 0 1010 10z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+  LogOut: () => <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M8 17H4a1 1 0 01-1-1V4a1 1 0 011-1h4M13 14l4-4-4-4M17 10H8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>,
 };

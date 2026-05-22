@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { HashRouter as BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import Sidebar from './components/layout/Sidebar';
 import Header from './components/layout/Header';
+import Login from './pages/Login/Login';
 import Dashboard from './pages/Dashboard';
 import ClientList from './pages/Clients/ClientList';
 import ClientProfile from './pages/Clients/ClientProfile';
@@ -53,12 +55,20 @@ function AppLayout() {
   );
 }
 
+function AppContent() {
+  const { user } = useAuth();
+  if (!user) return <Login />;
+  return <AppLayout />;
+}
+
 export default function App() {
   return (
     <ThemeProvider>
-      <BrowserRouter>
-        <AppLayout />
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <AppContent />
+        </BrowserRouter>
+      </AuthProvider>
     </ThemeProvider>
   );
 }
