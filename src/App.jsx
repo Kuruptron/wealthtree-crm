@@ -15,6 +15,7 @@ import IntrospectionLogs from './pages/IntrospectionLogs/IntrospectionLogs';
 import MacroDashboard from './pages/MacroDashboard/MacroDashboard';
 import SOPs from './pages/SOPs/SOPs';
 import AIAssistant from './pages/AIAssistant/AIAssistant';
+import WorkTracker from './pages/WorkTracker/WorkTracker';
 
 function AppLayout() {
   const theme = useTheme();
@@ -37,6 +38,7 @@ function AppLayout() {
             <Route path="/macro" element={<MacroDashboard />} />
             <Route path="/sops" element={<SOPs />} />
             <Route path="/ai" element={<AIAssistant />} />
+            <Route path="/tracker" element={<WorkTracker />} />
           </Routes>
         </div>
       </div>

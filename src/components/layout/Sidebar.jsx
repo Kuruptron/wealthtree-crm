@@ -1,24 +1,31 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
+import { useAuth } from '../../context/AuthContext';
 import { Icon } from '../shared/Icons';
 
 const navItems = [
-  { path: '/', label: 'Dashboard', icon: Icon.Home },
-  { path: '/clients', label: 'Clients', icon: Icon.Users },
-  { path: '/interactions', label: 'Interactions', icon: Icon.Phone },
-  { path: '/tasks', label: 'Tasks', icon: Icon.Task },
-  { path: '/knowledge', label: 'Knowledge Base', icon: Icon.Book },
-  { path: '/introspection', label: 'Introspection', icon: Icon.Brain },
-  { path: '/macro', label: 'Macro', icon: Icon.Globe },
-  { path: '/sops', label: 'SOPs', icon: Icon.FileText },
-  { path: '/ai', label: 'AI Assistant', icon: Icon.Bot },
+  { path: '/',             label: 'Dashboard',    icon: Icon.Home     },
+  { path: '/clients',      label: 'Clients',      icon: Icon.Users    },
+  { path: '/interactions', label: 'Interactions', icon: Icon.Phone    },
+  { path: '/tasks',        label: 'Tasks',        icon: Icon.Task     },
+  { path: '/knowledge',    label: 'Knowledge Base', icon: Icon.Book   },
+  { path: '/introspection',label: 'Introspection', icon: Icon.Brain   },
+  { path: '/macro',        label: 'Macro',        icon: Icon.Globe    },
+  { path: '/sops',         label: 'SOPs',         icon: Icon.FileText },
+  { path: '/ai',           label: 'AI Assistant', icon: Icon.Bot      },
+  { path: '/tracker',      label: 'Work Tracker', icon: Icon.Tracker, restricted: ['sachin', 'bindu'] },
 ];
 
 export default function Sidebar({ collapsed, onToggle }) {
   const theme = useTheme();
+  const { user } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const isActive = (path) => path === '/' ? location.pathname === '/' : location.pathname.startsWith(path);
+
+  const visible = navItems.filter(item =>
+    !item.restricted || item.restricted.includes(user?.username)
+  );
 
   return (
     <div style={{ width: collapsed ? '56px' : '220px', background: theme.white, borderRight: `1px solid ${theme.fog}`, display: 'flex', flexDirection: 'column', transition: 'width 0.2s ease', flexShrink: 0, overflow: 'hidden' }}>
@@ -33,7 +40,7 @@ export default function Sidebar({ collapsed, onToggle }) {
       </div>
 
       <div style={{ flex: 1, padding: '10px 8px', overflowY: 'auto', overflowX: 'hidden' }}>
-        {navItems.map(item => {
+        {visible.map(item => {
           const active = isActive(item.path);
           return (
             <div key={item.path} onClick={() => navigate(item.path)} title={collapsed ? item.label : undefined}
