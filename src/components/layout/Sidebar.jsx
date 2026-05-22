@@ -9,10 +9,8 @@ const navItems = [
   { path: '/interactions', label: 'Interactions', icon: Icon.Phone    },
   { path: '/tasks',        label: 'Tasks',        icon: Icon.Task     },
   { path: '/knowledge',    label: 'Knowledge Base', icon: Icon.Book   },
-  { path: '/introspection',label: 'Introspection', icon: Icon.Brain   },
   { path: '/macro',        label: 'Macro',        icon: Icon.Globe    },
   { path: '/sops',         label: 'SOPs',         icon: Icon.FileText },
-  { path: '/ai',           label: 'AI Assistant', icon: Icon.Bot      },
   { path: '/tracker',      label: 'Work Tracker', icon: Icon.Tracker, restricted: ['sachin', 'bindu'] },
 ];
 

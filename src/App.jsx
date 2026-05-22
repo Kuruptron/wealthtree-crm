@@ -11,10 +11,8 @@ import ClientProfile from './pages/Clients/ClientProfile';
 import Interactions from './pages/Interactions/Interactions';
 import Tasks from './pages/Tasks/Tasks';
 import KnowledgeBase from './pages/KnowledgeBase/KnowledgeBase';
-import IntrospectionLogs from './pages/IntrospectionLogs/IntrospectionLogs';
 import MacroDashboard from './pages/MacroDashboard/MacroDashboard';
 import SOPs from './pages/SOPs/SOPs';
-import AIAssistant from './pages/AIAssistant/AIAssistant';
 import WorkTracker from './pages/WorkTracker/WorkTracker';
 
 function AppLayout() {
@@ -34,10 +32,8 @@ function AppLayout() {
             <Route path="/interactions" element={<Interactions />} />
             <Route path="/tasks" element={<Tasks />} />
             <Route path="/knowledge" element={<KnowledgeBase />} />
-            <Route path="/introspection" element={<IntrospectionLogs />} />
             <Route path="/macro" element={<MacroDashboard />} />
             <Route path="/sops" element={<SOPs />} />
-            <Route path="/ai" element={<AIAssistant />} />
             <Route path="/tracker" element={<WorkTracker />} />
           </Routes>
         </div>
